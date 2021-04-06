@@ -27,18 +27,26 @@ public class MainActivity extends AppCompatActivity {
 
         button = findViewById(R.id.retrieve_sensors_btn);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
-                sensorList = sensorMgr.getSensorList(Sensor.TYPE_ALL);
+        button.setOnClickListener(new MyOnClickListener(this));
+    }
 
-                mTxtSensors.append("(# Sensors : " + sensorList.size() + ")\n\n");
-                for (Sensor sensor : sensorList) {
-                    mTxtSensors.append("(# Sensors name : " + sensor.getName() + "\n");
-                    mTxtSensors.append("(# Sensors type : " + sensor.getType() + "\n\n");
-                }
+    private class MyOnClickListener implements View.OnClickListener {
+        MainActivity mainActivity;
+
+        public MyOnClickListener(MainActivity mainActivity) {
+            this.mainActivity = mainActivity;
+        }
+
+        @Override
+        public void onClick(View v) {
+            sensorMgr = (SensorManager) getSystemService(SENSOR_SERVICE);
+            sensorList = sensorMgr.getSensorList(Sensor.TYPE_ALL);
+
+            mTxtSensors.append("(# Sensors : " + sensorList.size() + ")\n\n");
+            for (Sensor sensor : sensorList) {
+                mTxtSensors.append("(# Sensors name : " + sensor.getName() + "\n");
+                mTxtSensors.append("(# Sensors type : " + sensor.getType() + "\n\n");
             }
-        });
+        }
     }
-    }
+}
